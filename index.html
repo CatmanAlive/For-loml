@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>For you 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--milk:#fff6ea;--mocha:#7a4b34;--rose:#ff7aa2;--rose-d:#e0527f;--ink:#4a2c22}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:'Fredoka',system-ui,sans-serif;background:radial-gradient(circle at 20% 10%,#ffe3ec,transparent 55%),radial-gradient(circle at 85% 90%,#f5dcc8,transparent 50%),var(--milk);color:var(--ink);overflow-x:hidden}
+#bg{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.fl{position:absolute;bottom:-40px;font-size:22px;opacity:.5;animation:up linear infinite}
+@keyframes up{to{transform:translateY(-110vh) rotate(25deg)}}
+#app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 18px;text-align:center}
+.bears{display:flex;align-items:flex-end;justify-content:center;gap:6px;margin-bottom:6px}
+.bears svg{width:clamp(110px,30vw,150px);height:auto;animation:bob 3s ease-in-out infinite}
+.bears svg:nth-child(3){animation-delay:-1.5s}
+.bears .mid{font-size:34px;animation:beat 1.2s infinite;margin-bottom:40px}
+.close{gap:0}.close .mid{margin:0 -14px 50px;font-size:44px;z-index:2}
+@keyframes bob{50%{transform:translateY(-8px)}}
+@keyframes beat{50%{transform:scale(1.25)}}
+.bubble{background:#fff;border:3px solid var(--mocha);border-radius:22px;padding:10px 16px;max-width:320px;margin:0 auto 14px;font-size:15px;position:relative}
+.bubble:after{content:"";position:absolute;left:50%;bottom:-12px;width:18px;height:18px;background:#fff;border-right:3px solid var(--mocha);border-bottom:3px solid var(--mocha);transform:translateX(-50%) rotate(45deg)}
+.card{background:rgba(255,255,255,.7);border:3px solid var(--mocha);border-radius:28px;padding:26px 22px;width:min(92vw,440px);box-shadow:6px 6px 0 var(--mocha)}
+h1{font-size:clamp(26px,6vw,34px);margin:0 0 8px;font-weight:600;line-height:1.2}
+p{margin:0 0 16px;line-height:1.5}
+.btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;min-height:56px}
+button{font:inherit;font-weight:500;font-size:18px;border:3px solid var(--mocha);border-radius:999px;padding:10px 24px;cursor:pointer;background:#fff;color:var(--ink);transition:transform .15s,left .25s,top .25s}
+button:hover{transform:translateY(-2px)}
+button:focus-visible{outline:3px solid var(--rose-d);outline-offset:3px}
+button.yes{background:var(--rose);color:#fff;border-color:var(--rose-d)}
+.dots{display:flex;gap:6px;justify-content:center;margin-bottom:14px}
+.dots i{width:10px;height:10px;border-radius:50%;background:#e8d5c8}.dots i.on{background:var(--rose)}
+.letter{font-family:'Caveat',cursive;font-size:clamp(22px,5vw,27px);line-height:1.35;text-align:left;font-weight:500}
+.letter b{display:block;text-align:right;margin-top:10px}
+.pop{position:fixed;z-index:9;pointer-events:none;font-size:26px;animation:pop 1.6s ease-out forwards}
+@keyframes pop{to{transform:translate(var(--x),var(--y)) rotate(var(--r));opacity:0}}
+.eye{transform-box:fill-box;transform-origin:center;animation:blink 4.5s infinite}
+@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+.card{animation:fade .5s ease}.bubble{animation:rise .5s ease}
+@keyframes fade{from{opacity:0}}
+@keyframes rise{from{opacity:0;transform:translateY(14px) scale(.97)}}
+input[type=range]{width:100%;accent-color:var(--rose-d);height:28px}
+.big{font-size:42px;font-weight:600;margin-top:6px;color:var(--rose-d)}
+.hearts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;width:100%}
+.h{font-size:24px;padding:6px 12px}
+.rs{width:100%;min-height:2.6em;font-family:'Caveat',cursive;font-size:27px;margin:8px 0 0;line-height:1.2}
+.count{background:#fff;border:2px dashed var(--rose);border-radius:16px;padding:10px;margin-bottom:14px;font-size:16px}
+.count b{color:var(--rose-d);font-size:20px}
+.inf{color:var(--rose-d);font-size:36px;font-weight:600;vertical-align:-5px}
+a.btn{display:inline-block;font-weight:500;font-size:18px;border:3px solid var(--mocha);border-radius:999px;padding:10px 24px;background:#fff;color:var(--ink);text-decoration:none}
+.pics{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:16px}
+.pics img{width:44%;max-width:170px;aspect-ratio:1;object-fit:cover;border:6px solid #fff;border-bottom-width:18px;box-shadow:0 4px 10px rgba(0,0,0,.2);border-radius:4px}
+#mus{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:20;width:50px;height:50px;padding:0;font-size:22px;box-shadow:3px 3px 0 var(--mocha)}
+.sweet p{font-family:'Caveat',cursive;font-size:26px;margin:6px 0;color:var(--rose-d)}
+.inf{font-size:76px;line-height:1;font-weight:600;color:var(--rose-d);margin-top:10px;animation:beat 1.6s infinite}
+#pl{position:fixed;left:14px;right:76px;max-width:380px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:20;border:3px solid var(--mocha);border-radius:16px;overflow:hidden;background:#fff}
+#pl iframe{display:block;width:100%;border:0}
+#nx{width:100%;border:0;border-top:3px solid var(--mocha);border-radius:0;font-size:14px;padding:6px;background:var(--milk)}
+#pl{transition:transform .35s}body.pl-min #pl{transform:translateY(calc(100% + 30px))}body:not(.pl-min):has(#pl) #app{padding-bottom:230px}
+#row{display:flex;border-top:3px solid var(--mocha);background:#fff}#row a,#row button{flex:1;text-align:center;font-size:14px;padding:8px;color:var(--ink);background:#fff;text-decoration:none;border:0;border-radius:0}#row button{flex:0 0 33%;border-left:3px solid var(--mocha)}
+body{background-size:200% 200%,200% 200%,auto;animation:drift 18s ease-in-out infinite alternate}
+@keyframes drift{to{background-position:100% 100%,0 0,0 0}}
+.bears.hop svg{animation:hop .55s ease}
+.bears.mad svg{animation:shake .35s ease;filter:drop-shadow(0 0 6px #ff7aa2)}
+@keyframes hop{40%{transform:translateY(-28px) scale(1.07)}}
+@keyframes shake{25%{transform:translateX(-7px) rotate(-3deg)}75%{transform:translateX(7px) rotate(3deg)}}
+.close svg:first-child{rotate:7deg}.close svg:last-child{rotate:-7deg}
+.card{position:relative}.card:before{content:"🤎";position:absolute;top:-18px;right:22px;font-size:30px}
+#start{animation:wob 1.8s ease-in-out infinite}@keyframes wob{50%{transform:rotate(-3deg) scale(1.06)}}
+.pv{padding:14px 12px;font-size:14px;text-align:center;background:var(--milk);line-height:1.4}
+.np{display:flex;align-items:center;gap:8px;padding:8px;background:#fff}
+.np img{width:48px;height:48px;border-radius:10px;object-fit:cover;border:2px solid var(--mocha)}
+#npt{flex:1;font-size:15px;font-weight:500;text-align:left;line-height:1.2}
+.np button{padding:6px 10px;font-size:16px;border-width:2px}
+#row .lbl{flex:1;padding:8px;font-size:14px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<main id="app"></main>
+
+<script>
+/* ======== EDIT THESE ======== */
+const HER_NAME = "Baby";
+const YOUR_NAME = "Batman";
+const LETTER = `I don't say it enough, but you make every day feel softer. You're my favorite person, my safe place, and the best thing that ever happened to me. Thank you for being you — I'm yours, always. I love you more than Milk loves Mocha 🤎`;
+const START_DATE = "2025-01-01T00:00:00"; // the day you got together (set "" to hide the counter)
+const MUSIC_URL = "music.html"; // the songs page (keep both files in the same repo folder)
+const PHOTOS = []; // e.g. ["photos/us1.jpg","photos/us2.jpg"] - upload them next to index.html
+const REASONS = ["Your smile fixes my whole day","You laugh at my dumb jokes","You make me feel at home","You're cutest when you're sleepy","You believe in me","You're just... you 🤎"];
+// MUSIC: put your own mp3 files in a "music" folder next to index.html and list them, e.g. ["music/song1.mp3","music/song2.mp3"].
+// If left empty, a soft music-box tune plays instead.
+const MUSIC = [
+ {src:"music/Amor.mp3", title:"Amor", art:"music/Amor.jpeg"},
+ {src:"music/Angel.mp3", title:"Angel", art:"music/Angel.jpeg"},
+ {src:"music/We.mp3", title:"We Belong Together", art:"music/We.jpeg"},
+ {src:"music/Something.mp3", title:"Something", art:"music/Something.jpeg"},
+ {src:"music/Dream.mp3", title:"Dream", art:"music/Dream.jpeg"},
+ {src:"music/Loque.mp3", title:"Lo Que Siento", art:"music/Loque.jpeg"},
+ {src:"music/Lover.mp3", title:"Lover", art:"music/Lover.jpeg"}
+];
+// MUSIC_LINK: paste a Spotify or YouTube link (song, album or playlist). It takes priority over the options above.
+const MUSIC_LINK = "https://open.spotify.com/playlist/177oo5TMKEkElTYtFUQkvb";
+let ti=0;
+const SWEET = ["You look so cute when you're angry 😤💗","You're my favorite hello and my hardest goodbye","I'd choose you in every universe"];
+/* ======== QUESTIONS ======== */
+// type "yn" = Yes/No ; dodge:true makes the No button run away
+// type "pick" = several answers ; any with dodge:true runs away
+const Q = [
+ {t:"Do you know I love you?", s:"Be honest, cutie 👀", type:"yn", dodge:true, say:"I knew it! 🥰"},
+ {t:"How much do you think I love you?", s:"Choose carefully...", type:"pick", say:"Wrong, it's even more 🤭",
+  opts:[{l:"A little",dodge:true},{l:"A lot"},{l:"To the moon 🌙"},{l:"Infinity 💫"}]},
+ {t:"What's our perfect day?", s:"Pick your fave", type:"pick", say:"Yes!! Writing that down 📝",
+  opts:[{l:"Cuddles & movies 🎬"},{l:"Late night talks 🌌"},{l:"Food date 🍜"},{l:"Doing nothing, together 🛋️"}]},
+ {t:"Tap the hearts 💗", s:"Some reasons I love you", type:"reasons", say:"And a million more 🥹"},
+ {t:"Okay, real talk 🥺", s:"Not a question, just feelings", type:"note", body:"You know you look so cute when you're angry 😤💗 Even your mad face is my favorite face.", say:"Don't be mad 🥹"},
+ {t:"One more thing...", s:"I get shy saying this", type:"note", body:"You're the best part of my day. Every day. Even the boring ones. 🤎", say:"Okay, back to the questions 💌"},
+ {t:"Rate my love for you", s:"Slide it, I dare you", type:"meter", say:"Told you. Off the charts 📈"},
+ {t:"When you're mad at me, what do I think?", s:"Don't glare at me 😤", type:"pick", say:"Because it's true 😌💗",
+  opts:[{l:"You look so cute when you're angry 😤💗"},{l:"Uh oh 😅"},{l:"I'm still the best 😎"}]},
+ {t:"Am I your favorite person?", s:"No pressure... (a little pressure)", type:"yn", dodge:true, say:"Mine too 🥹"},
+ {t:"Will you stay with me forever?", s:"Final question 💍", type:"yn", dodge:true, say:"FOREVER IT IS 💖"}
+];
+const TAUNT = ["Hey!! 😤","Nice try 😏","Stop running from love","I can do this all day","Milk is judging you 🥛","Mocha too ☕","You look so cute when you're angry 😤💗","Okay okay... almost there"];
+const NO_TEXT = ["No","Are you sure?","Really?? 🥺","Think again","Pretty please","Nope can't click","Too slow 😜","Just say yes 🐻"];
+
+/* ======== BEARS (original art - swap with your own images if you want) ======== */
+const bear = (fur,inner,extra="") => `<svg viewBox="0 0 140 156" aria-hidden="true">
+ <circle cx="34" cy="30" r="17" fill="${fur}" stroke="#7a4b34" stroke-width="3"/><circle cx="34" cy="30" r="8" fill="${inner}"/>
+ <circle cx="106" cy="30" r="17" fill="${fur}" stroke="#7a4b34" stroke-width="3"/><circle cx="106" cy="30" r="8" fill="${inner}"/>
+ <ellipse cx="52" cy="144" rx="14" ry="9" fill="${fur}" stroke="#7a4b34" stroke-width="3"/><ellipse cx="88" cy="144" rx="14" ry="9" fill="${fur}" stroke="#7a4b34" stroke-width="3"/>
+ <ellipse cx="70" cy="114" rx="32" ry="31" fill="${fur}" stroke="#7a4b34" stroke-width="3"/>
+ <ellipse cx="70" cy="119" rx="19" ry="19" fill="${inner}"/>
+ <ellipse cx="35" cy="108" rx="9" ry="16" transform="rotate(25 35 108)" fill="${fur}" stroke="#7a4b34" stroke-width="3"/>
+ <ellipse cx="105" cy="108" rx="9" ry="16" transform="rotate(-25 105 108)" fill="${fur}" stroke="#7a4b34" stroke-width="3"/>
+ <circle cx="70" cy="64" r="44" fill="${fur}" stroke="#7a4b34" stroke-width="3"/>
+ <ellipse cx="70" cy="78" rx="18" ry="14" fill="${inner}"/>
+ <ellipse cx="70" cy="72" rx="6" ry="4.5" fill="#4a2c22"/>
+ <circle class="eye" cx="54" cy="58" r="4.5" fill="#4a2c22"/><circle class="eye" cx="86" cy="58" r="4.5" fill="#4a2c22"/>
+ <circle cx="55.5" cy="56.5" r="1.5" fill="#fff"/><circle cx="87.5" cy="56.5" r="1.5" fill="#fff"/>
+ <circle cx="44" cy="74" r="6" fill="#ff7aa2" opacity=".55"/><circle cx="96" cy="74" r="6" fill="#ff7aa2" opacity=".55"/>
+ <path d="M62 83q8 7 16 0" fill="none" stroke="#4a2c22" stroke-width="3" stroke-linecap="round"/>${extra}</svg>`;
+const MILK = bear("#fffaf0","#f6dcc6",`<path d="M70 129c-10-7-13-12-9-16 3-3 7-1 9 2 2-3 6-5 9-2 4 4 1 9-9 16z" fill="#ff7aa2"/>`);
+const MOCHA = bear("#b07a58","#e6c3a5",`<path d="M106 14l12-6v14z M106 14l-12-6v14z" fill="#ff7aa2" stroke="#e0527f" stroke-width="2"/><circle cx="106" cy="14" r="3.5" fill="#e0527f"/>`);
+const bears = (cls="") => `<div class="bears ${cls}">${MILK}<span class="mid">💗</span>${MOCHA}</div>`;
+
+/* ======== ENGINE ======== */
+const app = document.getElementById("app");
+let step = -1, yesScale = 1, dodges = 0;
+
+// floating background hearts
+const bg = document.getElementById("bg");
+["💗","🤎","🧸","💕","🥛","☕","✨"].forEach((e,i)=>{for(let k=0;k<3;k++){const s=document.createElement("span");s.className="fl";s.textContent=e;
+ s.style.left=Math.random()*100+"%";s.style.animationDuration=(12+Math.random()*14)+"s";s.style.animationDelay=(-Math.random()*20)+"s";bg.appendChild(s)}});
+
+function burst(n=26){for(let i=0;i<n;i++){const p=document.createElement("span");p.className="pop";p.textContent=["💖","🤎","🧸","✨","💕"][i%5];
+ p.style.left=innerWidth/2+"px";p.style.top=innerHeight/2+"px";p.style.setProperty("--x",(Math.random()-.5)*innerWidth+"px");
+ p.style.setProperty("--y",(Math.random()-.8)*innerHeight*.7+"px");p.style.setProperty("--r",(Math.random()*360-180)+"deg");
+ document.body.appendChild(p);setTimeout(()=>p.remove(),1700)}}
+
+function hop(c){const b=document.querySelector(".bears");if(!b)return;b.classList.remove("hop","mad");void b.offsetWidth;b.classList.add(c);setTimeout(()=>b.classList.remove(c),600)}
+function dodge(btn){
+ dodges++;
+ const tb=document.querySelector(".bubble");if(tb)tb.textContent=TAUNT[Math.min(dodges-1,TAUNT.length-1)];hop("mad");
+ if(btn.dataset.no!==undefined&&dodges>=8){const c=btn.cloneNode(true);c.className="yes";c.textContent="Fine... Yes 💖";c.style.transform="none";c.onclick=()=>next(Q[step].say);btn.replaceWith(c);return}
+ btn.style.position="fixed";
+ const m=12,x=m+Math.random()*(innerWidth-btn.offsetWidth-2*m),y=m+Math.random()*(innerHeight-btn.offsetHeight-2*m);
+ btn.style.left=x+"px";btn.style.top=y+"px";btn.style.zIndex=5;
+ if(btn.dataset.no!==undefined)btn.textContent=NO_TEXT[Math.min(dodges,NO_TEXT.length-1)];
+ const y1=document.querySelector(".yes");
+ if(y1){yesScale=Math.min(yesScale+.1,1.6);y1.style.transform=`scale(${yesScale})`}
+}
+function armDodge(btn){
+ btn.addEventListener("pointerenter",()=>dodge(btn));
+ btn.addEventListener("pointerdown",e=>{e.preventDefault();dodge(btn)});
+ btn.addEventListener("click",e=>e.preventDefault());
+}
+
+function next(msg){
+ if(msg){const b=document.querySelector(".bubble");if(b)b.textContent=msg;burst(10);hop("hop");setTimeout(()=>go(step+1),900)}
+ else go(step+1);
+}
+
+function go(i){
+ clearInterval(window.fin);step=i;yesScale=1;dodges=0;
+ if(i===-1){
+  app.innerHTML=`${bears()}<div class="card"><h1>Hey ${HER_NAME} 💌</h1><p>Milk, Mocha and I made something just for you. A few questions, a few surprises, all because I love you 🤎</p><div class="btns"><button class="yes" id="start">Open it 🧸</button></div></div>`;
+  document.getElementById("start").onclick=()=>{musicOn();go(0)};return;
+ }
+ if(i>=Q.length){final();return}
+ const q=Q[i];
+ const dots=Q.map((_,k)=>`<i class="${k<=i?"on":""}"></i>`).join("");
+ app.innerHTML=`<div class="bubble">${q.s}</div>${bears()}<div class="card"><div class="dots">${dots}</div><h1>${q.t}</h1><div class="btns" id="btns"></div></div>`;
+ const box=document.getElementById("btns");
+ if(q.type==="note")return note(box,q);
+ if(q.type==="meter")return meter(box,q);
+ if(q.type==="reasons")return reasons(box,q);
+ const opts=q.type==="yn"?[{l:"Yes 💖",yes:true},{l:"No",dodge:q.dodge,no:true}]:q.opts;
+ opts.forEach(o=>{
+  const b=document.createElement("button");b.textContent=o.l;
+  if(o.yes)b.classList.add("yes");
+  if(o.no)b.dataset.no="";
+  if(o.dodge)armDodge(b);else b.onclick=()=>next(q.say);
+  box.appendChild(b);
+ });
+ // "No" without dodge still needs to do something
+ const noBtn=box.querySelector("[data-no]");
+ if(noBtn&&!q.dodge)noBtn.onclick=()=>next("Hmm, try again 🥺");
+}
+
+function note(box,q){
+ box.innerHTML=`<p class="rs" style="font-size:30px">${q.body}</p>`;
+ const b=document.createElement("button");b.className="yes";b.textContent="Aww 🥹";b.onclick=()=>{burst(14);next(q.say)};
+ box.appendChild(b);
+}
+let ac,syn,aud,playing=false;
+const mus=document.createElement("button");mus.id="mus";mus.setAttribute("aria-label","Toggle music");mus.textContent="🔇";document.body.appendChild(mus);
+function synth(){
+ ac=ac||new (window.AudioContext||window.webkitAudioContext)();ac.resume();
+ const ch=[[261.6,329.6,392,523.3],[220,261.6,329.6,440],[174.6,261.6,349.2,440],[196,293.7,392,493.9]];
+ let n=0;
+ syn=setInterval(()=>{const c=ch[Math.floor(n/8)%4],f=c[[0,1,2,3,2,1,3,2][n%8]];n++;
+  const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime;o.type="sine";o.frequency.value=f;
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.12,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+1.4);
+  o.connect(g);g.connect(ac.destination);o.start();o.stop(t+1.5)},420);
+}
+function player(){
+ const T=MUSIC.map(m=>typeof m==="string"?{src:m,title:m.split("/").pop().replace(/\.\w+$/,"").replace(/[-_]+/g," ")}:m);
+ let i=0;aud=aud||new Audio();
+ const d=document.createElement("div");d.id="pl";
+ d.innerHTML=`<div class="np"><img id="npa" alt=""><div id="npt"></div><button id="pprev" aria-label="Previous song">⏮</button><button id="pplay" aria-label="Play or pause">⏸</button><button id="pnext" aria-label="Next song">⏭</button></div><div id="row"><span class="lbl">🎧 Our songs</span><button id="hd">Hide ⌄</button></div>`;
+ document.body.appendChild(d);
+ const art=document.getElementById("npa"),tt=document.getElementById("npt"),pb=document.getElementById("pplay");
+ const load=k=>{i=(k+T.length)%T.length;const t=T[i];aud.src=t.src;tt.textContent=t.title;art.style.display=t.art?"block":"none";art.src=t.art||"";aud.play().catch(()=>{})};
+ aud.onended=()=>load(i+1);aud.onplay=()=>pb.textContent="⏸";aud.onpause=()=>pb.textContent="▶️";
+ pb.onclick=()=>aud.paused?aud.play():aud.pause();
+ document.getElementById("pprev").onclick=()=>load(i-1);
+ document.getElementById("pnext").onclick=()=>load(i+1);
+ document.getElementById("hd").onclick=()=>document.body.classList.add("pl-min");
+ document.body.classList.remove("pl-min");load(0);
+}
+function embed(){
+ const A=[].concat(MUSIC_LINK),L=A[ti%A.length]||"";let src="",h=152,m;
+ if(m=L.match(/open\.spotify\.com\/(?:intl-[a-z]+\/)?(track|playlist|album)\/(\w+)/)){src=`https://open.spotify.com/embed/${m[1]}/${m[2]}`;h=m[1]==="track"?80:152}
+ else if(m=L.match(/(?:youtu\.be\/|v=)([\w-]{11})/)){src=`https://www.youtube.com/embed/${m[1]}?autoplay=1&loop=1&playlist=${m[1]}`;h=180}
+ else if(m=L.match(/list=([\w-]+)/)){src=`https://www.youtube.com/embed/videoseries?list=${m[1]}&autoplay=1&loop=1`;h=180}
+ if(!src)return false;
+ let d=document.getElementById("pl");if(!d){d=document.createElement("div");d.id="pl";document.body.appendChild(d)}
+ d.innerHTML=`${/claude/i.test(location.hostname)?`<div class="pv">🎧 Your songs play on the live site (this preview can't load Spotify)</div>`:`<iframe src="${src}" height="${h}" allow="autoplay; encrypted-media" title="Our music"></iframe>`}<div id="row"><a id="op" href="${L}" target="_blank" rel="noopener">Open the song 🎧</a><button id="hd">Hide ⌄</button></div>`+(A.length>1?`<button id="nx">⏭ Next song (${ti%A.length+1}/${A.length})</button>`:"");
+ const nx=document.getElementById("nx");if(nx)nx.onclick=()=>{ti++;embed()};document.body.classList.remove("pl-min");document.getElementById("hd").onclick=()=>document.body.classList.add("pl-min");return true;
+}
+function musicOn(){
+ if(playing)return;playing=true;mus.textContent="🎵";
+ if(MUSIC.length){player();return}
+ if(MUSIC_LINK&&embed())return;
+ if(MUSIC.length){let i=0;aud=aud||new Audio();aud.src=MUSIC[0];aud.onended=()=>{i=(i+1)%MUSIC.length;aud.src=MUSIC[i];aud.play()};aud.play().catch(()=>synth())}
+ else synth();
+}
+function musicOff(){document.getElementById("pl")?.remove();playing=false;mus.textContent="🔇";aud&&aud.pause();clearInterval(syn)}
+mus.onclick=()=>{if(document.getElementById("pl")){document.body.classList.toggle("pl-min");return}playing?musicOff():musicOn()};
+function meter(box,q){
+ box.innerHTML=`<div style="width:100%"><input type="range" id="m" min="0" max="100" value="8" aria-label="love meter"><div class="big" id="ml">8%</div></div>`;
+ const m=document.getElementById("m"),l=document.getElementById("ml");
+ m.oninput=()=>l.textContent=m.value+"%";
+ m.onchange=()=>{m.disabled=true;const t=setInterval(()=>{m.value=+m.value+4;l.textContent=m.value+"%";if(+m.value>=100){clearInterval(t);l.textContent="Infinity ∞ 💖";next(q.say)}},30)};
+}
+function reasons(box,q){
+ let seen=0;
+ box.innerHTML=`<div class="hearts">${REASONS.map((_,i)=>`<button class="h" data-i="${i}" aria-label="reason ${i+1}">💗</button>`).join("")}</div><p class="rs" id="rs">Tap a heart</p>`;
+ box.querySelectorAll(".h").forEach(h=>h.onclick=()=>{
+  if(h.dataset.on)return;h.dataset.on=1;h.textContent="🤎";
+  document.getElementById("rs").textContent=REASONS[h.dataset.i];burst(6);
+  if(++seen===REASONS.length){const b=document.createElement("button");b.className="yes";b.textContent="Aww, next 💖";b.onclick=()=>next(q.say);box.appendChild(b)}
+ });
+}
+function typeOut(el,txt,done){let i=0;const t=setInterval(()=>{el.textContent=txt.slice(0,++i);if(i>=txt.length){clearInterval(t);done&&done()}},32)}
+function final(){
+ burst(40);window.fin=setInterval(()=>burst(6),2600);
+ const pics=PHOTOS.map((p,i)=>`<img src="${p}" alt="us" onerror="this.remove()" style="transform:rotate(${i%2?3:-3}deg)">`).join("");
+ app.innerHTML=`${bears("close")}<div class="card"><h1>She said yes!! 🎉</h1>
+ ${START_DATE?`<div class="count" id="cnt"></div>`:""}
+ <div class="letter"><span id="lt"></span><b id="sig" style="opacity:0;transition:opacity 1s">— ${YOUR_NAME} 🤎</b></div>
+ <div id="more" style="opacity:0;transition:opacity 1.4s;margin-top:14px"><div class="sweet">${SWEET.map(s=>`<p>${s}</p>`).join("")}</div><div class="inf">∞</div><p>Infinity. That's how much I love you.</p></div>
+ ${pics?`<div class="pics">${pics}</div>`:""}
+ <div class="btns" style="margin-top:18px"><button class="yes" id="again">More love 💖</button> <a class="btn" href="${MUSIC_URL}">Our songs 🎧</a></div></div>`;
+ document.getElementById("again").onclick=()=>burst(50);
+ typeOut(document.getElementById("lt"),LETTER,()=>{document.getElementById("sig").style.opacity=1;document.getElementById("more").style.opacity=1});
+ if(START_DATE){const c=document.getElementById("cnt"),s=new Date(START_DATE);const tick=()=>{const d=Math.max(0,Date.now()-s),D=Math.floor(d/864e5),H=Math.floor(d%864e5/36e5),M=Math.floor(d%36e5/6e4),S=Math.floor(d%6e4/1e3);c.innerHTML=`Loving you for <span class="inf">∞</span> and counting 🤎<br><small>(${D} days, ${H}h ${M}m ${S}s so far)</small>`};tick();setInterval(tick,1000)}
+}
+let lx=0,ly=0;
+addEventListener("pointermove",e=>{if(Math.hypot(e.clientX-lx,e.clientY-ly)<38)return;lx=e.clientX;ly=e.clientY;
+ const s=document.createElement("span");s.className="pop";s.textContent="✨";
+ s.style.cssText=`left:${lx}px;top:${ly}px;font-size:16px;--x:0px;--y:30px;--r:40deg;animation-duration:.9s`;
+ document.body.appendChild(s);setTimeout(()=>s.remove(),950)});
+go(-1);
+</script>
+</body>
+</html>
